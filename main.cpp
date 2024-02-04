@@ -5,8 +5,11 @@ class Character {
     public:
         //gets the world position value
         Vector2 getWorldPos(){return worldPos;}
+        void setScreenPos(int winWidth, int winHeight)
     private:
-        Texture2D texture, idle, running;
+        Texture2D texture{LoadTexture("characters/knight_idle_spritesheet.png")}, 
+                    idle{LoadTexture("aracters/knight_idle_spritesheet.png")},
+                    running{LoadTexture("characters/knight_run_spritesheet.png")};
         Vector2 screenPos, worldPos;
         //1 : facing the right, -1 : facing the left
         float rightLeft{1.f};
@@ -15,6 +18,7 @@ class Character {
         int frame{};
         const int maxFrames{6};
         const float updateTime{1.f/12.f};
+        const float speed{4.f};
 };
 
 int main(){
@@ -31,7 +35,7 @@ int main(){
     //movement speed of the player - Secret tip: the map is moving
     float speed{4};
 
-    //Knight 
+    //Knight
     Texture2D knight = LoadTexture("characters/knight_idle_spritesheet.png");
     //Knight idle
     Texture2D knightIdle = LoadTexture("characters/knight_idle_spritesheet.png");
