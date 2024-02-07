@@ -4,10 +4,9 @@ class Character
 {
 public:
     //Constructor
-    Character();
+    Character(int winWidth, int winHeight);
     // gets the world position value
     Vector2 getWorldPos() { return worldPos; }
-    void setScreenPos(int winWidth, int winHeight);
     // tick function
     void tick(float deltaTime);
     //Undo the movement if pass the map bounds
@@ -28,4 +27,5 @@ private:
     float width{}, height{};
     float updateTime{1.f / 12.f};
     float speed{4.f};
+    float scale{4.0f};
 };
