@@ -11,6 +11,7 @@ public:
     void tick(float deltaTime);
     //Undo the movement if pass the map bounds
     void undoMovement();
+    Rectangle getCollisionRec();
 
 private:
     Texture2D texture{LoadTexture("characters/knight_idle_spritesheet.png")},

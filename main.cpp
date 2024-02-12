@@ -2,6 +2,7 @@
 #include "raymath.h"
 #include "Character.h"
 #include "Prop.h"
+#include "Enemy.h"
 
 int main()
 {
@@ -19,7 +20,16 @@ int main()
 
     Character knight{windowDimension, windowDimension};
 
-    Prop rock{Vector2{0.f, 0.f}, LoadTexture("nature_tileset/Rock.png")};
+    Prop props[2]{
+        Prop{Vector2{600.f, 300.f}, LoadTexture("nature_tileset/Rock.png")},
+        Prop{Vector2{400.f, 500.f}, LoadTexture("nature_tileset/Log.png")}
+    };
+
+    Enemy goblin{
+        Vector2{}, 
+        LoadTexture("characters/goblin_idle_spritesheet.png"),
+        LoadTexture("characters/goblin_run_spritesheet.png")
+    };
 
     SetTargetFPS(60);
     while (!WindowShouldClose())
@@ -35,9 +45,13 @@ int main()
         // Draw the map
         DrawTextureEx(map, mapPos, 0, mapScale, WHITE);
 
-        rock.render(knight.getWorldPos());
-
         knight.tick(GetFrameTime());
+
+        //Draw the props
+        for (auto prop : props)
+        {
+            prop.render(knight.getWorldPos());
+        }
 
         //Check map bounds
         if (knight.getWorldPos().x < 0.f ||
@@ -48,6 +62,16 @@ int main()
             knight.undoMovement();
         }
     
+        for(auto prop : props)
+        {
+            if(CheckCollisionRecs(prop.getCollisionRec(knight.getWorldPos()), knight.getCollisionRec()))
+            {
+                knight.undoMovement();
+            }
+        }
+        
+        goblin.tick(GetFrameTime());
+
         EndDrawing();
     }
     CloseWindow();
