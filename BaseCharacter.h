@@ -8,6 +8,7 @@ class BaseCharacter
 {
     public:
         BaseCharacter();
+        virtual void tick(float deltaTime);
         // gets the world position value
         Vector2 getWorldPos() { return worldPos; }
         //Undo the movement if pass the map bounds
