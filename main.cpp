@@ -30,6 +30,8 @@ int main()
         LoadTexture("characters/goblin_idle_spritesheet.png"),
         LoadTexture("characters/goblin_run_spritesheet.png")
     };
+    // "&" = addres of operator, gets the addres in the variable
+    goblin.setTarget(&knight);
 
     SetTargetFPS(60);
     while (!WindowShouldClose())

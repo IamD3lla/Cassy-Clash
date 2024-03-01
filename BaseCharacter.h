@@ -8,6 +8,7 @@ class BaseCharacter
 {
     public:
         BaseCharacter();
+        //virtual allows the child classes to override the function
         virtual void tick(float deltaTime);
         // gets the world position value
         Vector2 getWorldPos() { return worldPos; }
