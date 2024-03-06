@@ -1,42 +1,77 @@
 #include "Character.h"
 #include "raymath.h"
 
-Character::Character(int winWidth, int winHeight)
+Character::Character(int winWidth, int winHeight) :
+    windowWidth(winWidth),
+    windowHeight(winHeight)
 {
     width = texture.width / maxFrames;
     height = texture.height;
-    //Character position in the screen
-    screenPos = {
-        // Multiplied by 4 because it's scaled 4 times
-        static_cast<float>(winWidth) / 2.0f - scale * (0.5f * width), // x
-        static_cast<float>(winHeight) / 2.0f - scale * (0.5f * height)       // y
+}
+
+//Character position in the screen
+Vector2 Character::getScreenPos()
+{
+    return Vector2{
+        static_cast<float>(windowWidth) / 2.0f - scale * (0.5f * width),   // x
+        static_cast<float>(windowHeight) / 2.0f - scale * (0.5f * height)  // y
     };
 }
 
 void Character::tick(float deltaTime)
 {
-    BaseCharacter::tick(deltaTime);
+ 
 
-    Vector2 direction{};
     if (IsKeyDown(KEY_A))
-        direction.x--;
+        velocity.x--;
     if (IsKeyDown(KEY_D))
-        direction.x++;
+        velocity.x++;
     if (IsKeyDown(KEY_W))
-        direction.y--;
+        velocity.y--;
     if (IsKeyDown(KEY_S))
-        direction.y++;
+        velocity.y++;
 
-    if (Vector2Length(direction) != 0)
+    BaseCharacter::tick(deltaTime);    
+
+    //origin by where is generated
+    Vector2 origin{};
+    //offset = distance to sprite not cover the character sprite
+    Vector2 offset{};
+    //Rotation of the sword
+    float rotation;
+    if(rightLeft > 0.f)//facing right
     {
-        // set worldPos = worldPos + direction
-        worldPos = Vector2Add(worldPos, Vector2Scale(Vector2Normalize(direction), speed));
-        // ternary operator - if(condition) ? do : else
-        direction.x < 0.f ? rightLeft = -1.f : rightLeft = 1.f;
-        texture = running;
+        origin = {0.f, weapon.height * scale};
+        offset = {40.f, 55.f};
+        rotation = 35.f;
+        weaponCollisionRec = {
+            getScreenPos().x + offset.x,
+            getScreenPos().y + offset.y - weapon.height * scale,
+            weapon.width * scale,
+            weapon.height * scale
+        };
     }
     else
     {
-        texture = idle;
+        origin= {weapon.width * scale, weapon.height * scale};
+        offset = {25.f, 55.f};
+        rotation = -35.f;
+        weaponCollisionRec = {
+            getScreenPos().x + offset.x - weapon.width * scale,
+            getScreenPos().y + offset.y - weapon.height * scale,
+            weapon.width * scale,
+            weapon.height * scale
+        };
     }
+
+    //Draw the sword
+    //source = where find the texture in the sprite
+    Rectangle source{0.f, 0.f, static_cast<float>(weapon.width) * rightLeft, static_cast<float>(weapon.height)};
+    //dest where to draw in the screen
+    Rectangle dest{getScreenPos().x + offset.x, getScreenPos().y + offset.y, weapon.width * scale, weapon.height * scale};
+    DrawTexturePro(weapon, source, dest, origin, rotation, WHITE);
+
+    DrawRectangleLines(
+        weaponCollisionRec.x, weaponCollisionRec.y, weaponCollisionRec.width, weaponCollisionRec.height, RED
+    );
 }

@@ -12,6 +12,8 @@ class BaseCharacter
         virtual void tick(float deltaTime);
         // gets the world position value
         Vector2 getWorldPos() { return worldPos; }
+        //This is a Pure virtual function, they're equaled to zero ;D
+        virtual Vector2 getScreenPos() = 0;
         //Undo the movement if pass the map bounds
         void undoMovement();
         Rectangle getCollisionRec();
@@ -19,7 +21,7 @@ class BaseCharacter
         Texture2D texture{LoadTexture("characters/knight_idle_spritesheet.png")},
                 idle{LoadTexture("characters/knight_idle_spritesheet.png")},
                 running{LoadTexture("characters/knight_run_spritesheet.png")};
-        Vector2 screenPos{}, worldPos{};
+        Vector2 worldPos{};
         Vector2 worldPosLastFrame{};
         // 1 : facing the right, -1 : facing the left
         float rightLeft{1.f};
@@ -31,6 +33,8 @@ class BaseCharacter
         float updateTime{1.f / 12.f};
         float speed{4.f};
         float scale{4.0f};
+        //direction of the movement and distance that should move
+        Vector2 velocity{};
 
 };
 

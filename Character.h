@@ -15,9 +15,12 @@ public:
     //virtual key allows to override the parent function tick
     //override key says that this funtion is overriding the function from the parent
     virtual void tick(float deltaTime) override;
-    Vector2 getScreenPos() {return screenPos;}
+    virtual Vector2 getScreenPos() override;
 private:
-    
+    int windowWidth{};
+    int windowHeight{};
+    Texture2D weapon{LoadTexture("characters/weapon_sword.png")};
+    Rectangle weaponCollisionRec;
 };
 
 #endif
