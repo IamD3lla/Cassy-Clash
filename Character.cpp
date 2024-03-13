@@ -33,6 +33,8 @@ void Character::tick(float deltaTime)
 
     BaseCharacter::tick(deltaTime);    
 
+    //if character not alive, return will end before the other lines execute
+    if(!getAlive()) return;
     //origin by where is generated
     Vector2 origin{};
     //offset = distance to sprite not cover the character sprite
@@ -43,25 +45,25 @@ void Character::tick(float deltaTime)
     {
         origin = {0.f, weapon.height * scale};
         offset = {40.f, 55.f};
-        rotation = 35.f;
         weaponCollisionRec = {
             getScreenPos().x + offset.x,
             getScreenPos().y + offset.y - weapon.height * scale,
             weapon.width * scale,
             weapon.height * scale
         };
+        rotation = IsMouseButtonDown(MOUSE_LEFT_BUTTON) ? 35.f : 0.f;
     }
     else
     {
         origin= {weapon.width * scale, weapon.height * scale};
         offset = {25.f, 55.f};
-        rotation = -35.f;
         weaponCollisionRec = {
             getScreenPos().x + offset.x - weapon.width * scale,
             getScreenPos().y + offset.y - weapon.height * scale,
             weapon.width * scale,
             weapon.height * scale
         };
+        rotation = IsMouseButtonDown(MOUSE_LEFT_BUTTON) ? -35.f : 0.f;
     }
 
     //Draw the sword

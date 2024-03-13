@@ -23,10 +23,13 @@ Enemy::Enemy(Vector2 pos, Texture2D idle_texture, Texture2D run_texture) //:
 
 void Enemy::tick(float deltaTime)
 {
+    //if alive = false -> return will break the code and no longer animate the enemy
+    if(!getAlive()) return;
+
     //get toTargert - toTarget is the vector between the enemy to the target(character)
     velocity = Vector2Subtract(target->getScreenPos(), getScreenPos());
 
-    //BaseCharacter::tick(deltaTime);
+    BaseCharacter::tick(deltaTime);
 }
 
 //set the screen position of the enemy

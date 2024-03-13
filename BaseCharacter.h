@@ -17,6 +17,8 @@ class BaseCharacter
         //Undo the movement if pass the map bounds
         void undoMovement();
         Rectangle getCollisionRec();
+        bool getAlive() {return alive;}
+        void setAlive(bool isAlive) {alive = isAlive;}
     protected:
         Texture2D texture{LoadTexture("characters/knight_idle_spritesheet.png")},
                 idle{LoadTexture("characters/knight_idle_spritesheet.png")},
@@ -35,6 +37,8 @@ class BaseCharacter
         float scale{4.0f};
         //direction of the movement and distance that should move
         Vector2 velocity{};
+    private:
+        bool alive{true};
 
 };
 

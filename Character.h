@@ -16,6 +16,7 @@ public:
     //override key says that this funtion is overriding the function from the parent
     virtual void tick(float deltaTime) override;
     virtual Vector2 getScreenPos() override;
+    Rectangle getWeaponCollisionRec() {return weaponCollisionRec;}
 private:
     int windowWidth{};
     int windowHeight{};
