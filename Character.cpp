@@ -72,8 +72,14 @@ void Character::tick(float deltaTime)
     //dest where to draw in the screen
     Rectangle dest{getScreenPos().x + offset.x, getScreenPos().y + offset.y, weapon.width * scale, weapon.height * scale};
     DrawTexturePro(weapon, source, dest, origin, rotation, WHITE);
+}
 
-    DrawRectangleLines(
-        weaponCollisionRec.x, weaponCollisionRec.y, weaponCollisionRec.width, weaponCollisionRec.height, RED
-    );
+void Character::takeDamege(float damage)
+{
+    health -= damage;
+    if(health <= 0.f) 
+    {
+        setAlive(false);
+    }
+    
 }

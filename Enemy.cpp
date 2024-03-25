@@ -28,8 +28,15 @@ void Enemy::tick(float deltaTime)
 
     //get toTargert - toTarget is the vector between the enemy to the target(character)
     velocity = Vector2Subtract(target->getScreenPos(), getScreenPos());
-
+    if(Vector2Length(velocity) < radius) velocity = {};
     BaseCharacter::tick(deltaTime);
+
+    if(CheckCollisionRecs(target->getCollisionRec(), getCollisionRec()))
+    {
+        target->takeDamege(damagePerSec * deltaTime);
+    }
+
+    
 }
 
 //set the screen position of the enemy

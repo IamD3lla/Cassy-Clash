@@ -13,4 +13,6 @@ class Enemy : public BaseCharacter
         //pointer to character
         //pointers stores the location on the memory value
         Character* target;
+        float damagePerSec{10.f};
+        float radius{25.f};
 };
